@@ -1,10 +1,17 @@
-# Colors
-BACKGROUND_COLOR = (18, 22, 70)
-LINE_COLOR = tuple(BACKGROUND_COLOR[i]//2 for i in range(3))
+# board constants
+N = 8       
+CELL_SIZE = 100
+BACKGROUND_COLOR = (18, 22, 70) # Dark Blue
+# Derived constants
+LINE_THICKNESS = CELL_SIZE//20
+LINE_COLOR = tuple(BACKGROUND_COLOR[i]//2 for i in range(3)) # Darker Blue
+WIDTH, HEIGHT = N * CELL_SIZE, N * CELL_SIZE
 
-HOVER_ALPHA = 100
+HOVER_ALPHA = 100 # Brightness of Block hover
 
-OUT_OF_BOUND = -1
+OUT_OF_BOUND = -1 # Out of Grid value
+
+# Possible colors to display
 EMPTY = 0
 BLUE = 1
 RED = 2
@@ -14,8 +21,10 @@ YELLOW = 5
 ORANGE = 6
 WHITE = 8
 
+# Possible Block colors
 COLORS = [BLUE,RED,GREEN,PURPLE,ORANGE]
 
+# Color MACRO to RGB conversion
 RGB_COLORS = {
     EMPTY : BACKGROUND_COLOR,
     BLUE : (53, 178, 224),     # Muted Blue
@@ -26,6 +35,7 @@ RGB_COLORS = {
     ORANGE : (220, 180, 100),   # Muted Orange
     WHITE : (255,255,255),
 }
+
 # Shapes
 ONE_BY_ONE_SQUARE = [(0,0)]
 TWO_BY_TWO_SQUARE = [(0,0),(1,0),(0,1),(1,1)]
@@ -48,10 +58,3 @@ SHAPES = [
     FLAT_L,
     REVERSE_FLAT_L,
 ]
-
-# board constants
-N = 8                # Number of cells in the grid
-CELL_SIZE = 100      # Size of each cell
-LINE_THICKNESS = CELL_SIZE//20
-# Derived constants
-WIDTH, HEIGHT = N * CELL_SIZE, N * CELL_SIZE
