@@ -19,7 +19,6 @@ GREEN = 3
 PURPLE = 4
 YELLOW = 5
 ORANGE = 6
-WHITE = 8
 
 # Possible Block colors
 COLORS = [BLUE,RED,GREEN,PURPLE,ORANGE]
@@ -33,7 +32,6 @@ RGB_COLORS = {
     PURPLE : (210, 95, 214),   # Muted Purple
     YELLOW : (236, 182, 50),   # Muted Yellow
     ORANGE : (220, 180, 100),   # Muted Orange
-    WHITE : (255,255,255),
 }
 
 # Shapes
