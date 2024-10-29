@@ -27,6 +27,7 @@ def draw(screen,board):
         if board.get_block(position) != OUT_OF_BOUND:
             hover = tuple([int(((255 - HOVER_ALPHA)/255)*RGB_COLORS[block][i]) + int(HOVER_ALPHA*RGB_COLORS[board.color][i]/255) for i in range(3)])
             draw_square(screen,position,hover)
+            
 
 def draw_square(screen,position,color):
     col,row = position

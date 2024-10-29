@@ -6,8 +6,9 @@ class Board:
 
     def __init__(self,n = N):
         self.n = n
+        self.debug_index = 0
         self.board = [[EMPTY for _ in range(n)] for  _ in range(n)]
-        self.shape = SHAPES[0]
+        self.shape = SHAPES[self.debug_index]
         self.shapes = SHAPES
         self.color = COLORS[0]
         self.colors = COLORS
@@ -19,15 +20,18 @@ class Board:
         return self.board[row][col]
 
     def add_block(self, position):
-        if self.__can_add_block(position):
-            col, row = position
-            for shape_col,shape_row in self.shape:
-                self.board[row+shape_row][col+shape_col] = self.color
-            self.__clear_lines()
-            self.color = random.choice([c for c in self.colors if c != self.color])
-            self.shape = random.choice(self.shapes)
+        # if self.__can_add_block(position):
+        col, row = position
+        for shape_col,shape_row in self.shape:
+            self.board[row + shape_row][col + shape_col] = self.color
+        self.__clear_lines()
+        self.color = random.choice([c for c in self.colors if c != self.color])
+        self.debug_index = (self.debug_index + 1) % len(self.shapes)
+        self.shape = self.shapes[self.debug_index]
+        # self.shape = random.choice(self.shapes)
     
     # private methods
+
     def __can_add_block(self,position):
         col, row = position
         for shape_col, shape_row in self.shape:
