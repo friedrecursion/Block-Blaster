@@ -11,7 +11,7 @@ MARGIN_SIDE = CELL_SIZE
 BOARD_SIZE = N * CELL_SIZE
 WIDTH, HEIGHT = 2 * MARGIN_SIDE + BOARD_SIZE, MARGIN_TOP + BOARD_SIZE + 7 * CELL_SIZE
 
-HOVER_ALPHA = 100 # Brightness of Block hover
+BLEND_ALPHA = 100 # Brightness of Block preplace render
 
 OUT_OF_BOUND = -1 # Out of Grid value
 
