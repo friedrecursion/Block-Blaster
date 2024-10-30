@@ -31,14 +31,47 @@ def draw(screen,board,board_position, mouse_position):
         for shape_col, shape_row in board.shape:
             position = (mouseX + shape_col*CELL_SIZE - CELL_SIZE//2,mouseY + shape_row*CELL_SIZE - CELL_SIZE)
             col,row = board_position
-            draw_square_hover(screen,position,RGB_COLORS[board.color])
+            draw_square_mouse(screen,position,RGB_COLORS[board.color])
     else:
         # Draw next Block below the Grid
-        for shape_col, shape_row in board.shape:
-            position = (board.n//2 + shape_col,board.n + 4 + shape_row)
-            draw_square_board(screen,position,RGB_COLORS[board.color])
+        for i in range(3):
+            offset_x = 0
+            if not board.even_width():
+                offset_x = 0.5
 
-def draw_square_hover(screen,mouse_position,color):
+            offset_y = (board.height() - 2)/2
+
+            for col,row in board.shape:
+
+                draw_little_square(screen,(col + offset_x,row + offset_y),RGB_COLORS[board.color],i)
+    
+    # draw debug grids:
+    for i in range(5):
+        # Draw vertical lines
+        pygame.draw.line(screen, LINE_COLOR, (MARGIN_SIDE + i * CELL_SIZE//2, MARGIN_TOP + BOARD_SIZE + 2 * CELL_SIZE), (MARGIN_SIDE + i * CELL_SIZE//2, MARGIN_TOP + BOARD_SIZE + (2 + 2) * CELL_SIZE), LINE_THICKNESS)
+        # Draw horizontal lines
+        pygame.draw.line(screen, LINE_COLOR, (MARGIN_SIDE, MARGIN_TOP + BOARD_SIZE + 2*CELL_SIZE + i * CELL_SIZE//2 ), (MARGIN_SIDE + 2*CELL_SIZE, MARGIN_TOP + BOARD_SIZE + 2 * CELL_SIZE+ i * CELL_SIZE//2), LINE_THICKNESS)
+
+    # draw debug grids:
+    for i in range(5):
+        # Draw vertical lines
+        pygame.draw.line(screen, LINE_COLOR, (MARGIN_SIDE + 3 * CELL_SIZE + i * CELL_SIZE//2, MARGIN_TOP + BOARD_SIZE + 2 * CELL_SIZE), (MARGIN_SIDE + 3 * CELL_SIZE + i * CELL_SIZE//2, MARGIN_TOP + BOARD_SIZE + (2 + 2) * CELL_SIZE), LINE_THICKNESS)
+        # Draw horizontal lines
+        pygame.draw.line(screen, LINE_COLOR, (MARGIN_SIDE + 3 * CELL_SIZE, MARGIN_TOP + BOARD_SIZE + 2*CELL_SIZE + i * CELL_SIZE//2 ), (MARGIN_SIDE + 3 * CELL_SIZE + 2*CELL_SIZE, MARGIN_TOP + BOARD_SIZE + 2 * CELL_SIZE+ i * CELL_SIZE//2), LINE_THICKNESS)
+
+    # draw debug grids:
+    for i in range(5):
+        # Draw vertical lines
+        pygame.draw.line(screen, LINE_COLOR, (MARGIN_SIDE + 6 * CELL_SIZE + i * CELL_SIZE//2, MARGIN_TOP + BOARD_SIZE + 2 * CELL_SIZE), (MARGIN_SIDE + 6 * CELL_SIZE + i * CELL_SIZE//2, MARGIN_TOP + BOARD_SIZE + (2 + 2) * CELL_SIZE), LINE_THICKNESS)
+        # Draw horizontal lines
+        pygame.draw.line(screen, LINE_COLOR, (MARGIN_SIDE + 6 * CELL_SIZE, MARGIN_TOP + BOARD_SIZE + 2*CELL_SIZE + i * CELL_SIZE//2 ), (MARGIN_SIDE + 6 * CELL_SIZE + 2*CELL_SIZE, MARGIN_TOP + BOARD_SIZE + 2 * CELL_SIZE+ i * CELL_SIZE//2), LINE_THICKNESS)
+
+def draw_little_square(screen,board_position,color,index):
+    col,row = board_position
+    square = pygame.Rect(1 + MARGIN_SIDE + (0.5 + 3*index) * CELL_SIZE + col*CELL_SIZE//2 + LINE_THICKNESS//2,1 + MARGIN_TOP + BOARD_SIZE + 3 * CELL_SIZE + row*CELL_SIZE//2 + + LINE_THICKNESS//2, CELL_SIZE//2 - LINE_THICKNESS, CELL_SIZE//2 - LINE_THICKNESS)
+    pygame.draw.rect(screen, color, square)
+
+def draw_square_mouse(screen,mouse_position,color):
     mouseX,mouseY = mouse_position
     square = pygame.Rect(mouseX,mouseY, CELL_SIZE - LINE_THICKNESS, CELL_SIZE - LINE_THICKNESS)
     pygame.draw.rect(screen, color, square)

@@ -42,6 +42,11 @@ class Board:
         distance = abs(max_x - (min_x-1))
         return distance % 2 == 0
     
+    def height(self):
+        y_coords = [y for x,y in self.shape]
+        max_y = abs(min(y_coords))
+        return max_y + 1
+    
     # private methods
 
     def __clear_lines(self):

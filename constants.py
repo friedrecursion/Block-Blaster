@@ -1,6 +1,6 @@
 # board constants
 N = 8       
-CELL_SIZE = 45
+CELL_SIZE = 50
 BACKGROUND_COLOR = (60,74,128) # Dark Blue
 EMPTY_TILE_COLOR = (32,36,69)
 # Derived constants
