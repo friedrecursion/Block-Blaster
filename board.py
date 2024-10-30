@@ -19,7 +19,7 @@ class Board:
         return self.board[row][col]
 
     def add_block(self, position):
-        if True:#self.can_add_block(position):
+        if self.can_add_block(position):
             col, row = position
             for shape_col,shape_row in self.shape:
                 self.board[row + shape_row][col + shape_col] = self.color
