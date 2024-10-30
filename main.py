@@ -1,6 +1,6 @@
 import pygame
 import sys
-from constants import CELL_SIZE, BACKGROUND_COLOR, WIDTH, HEIGHT, MARGIN_SIDE,MARGIN_TOP
+from constants import BOARD_SIZE,CELL_SIZE, BACKGROUND_COLOR, WIDTH, HEIGHT, MARGIN_SIDE,MARGIN_TOP
 from board import Board
 from draw import draw
 
@@ -24,10 +24,12 @@ def main():
                 pygame.quit()
                 sys.exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:  # Check for mouse click event
-                board.block_held = True
-            elif event.type == pygame.MOUSEBUTTONUP:  
-                board.block_held = False
+                for i in range(3):
+                    if x >= MARGIN_SIDE + (i * 3)*CELL_SIZE and x <= MARGIN_SIDE + (2 + i * 3)*CELL_SIZE and y >= MARGIN_TOP + BOARD_SIZE + 2*CELL_SIZE and y <= MARGIN_TOP + BOARD_SIZE + (2+2)*CELL_SIZE:
+                        board.grab_block((x,y),i)
+            elif event.type == pygame.MOUSEBUTTONUP:
                 board.add_block(board_position)
+
         screen.fill(BACKGROUND_COLOR)
         draw(screen,board,board_position,mouse_position)
 

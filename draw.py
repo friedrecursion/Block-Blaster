@@ -17,7 +17,7 @@ def draw(screen,board,board_position, mouse_position):
             position = (col,row)
             draw_square_board(screen,position,RGB_COLORS[color])
     
-    if board.block_held:
+    if board.block_held != None:
         # Draw Preview of next Block in the Grid
         if board.can_add_block(board_position):
             col,row = board_position
@@ -32,18 +32,16 @@ def draw(screen,board,board_position, mouse_position):
             position = (mouseX + shape_col*CELL_SIZE - CELL_SIZE//2,mouseY + shape_row*CELL_SIZE - CELL_SIZE)
             col,row = board_position
             draw_square_mouse(screen,position,RGB_COLORS[board.color])
-    else:
-        # Draw next Block below the Grid
-        for i in range(3):
+    
+    # Draw next three Blocks below the Grid
+    for i,shape in enumerate(board.shapes):
+        if shape != None:
             offset_x = 0
-            if not board.even_width():
+            if not board.even_width(i):
                 offset_x = 0.5
-
-            offset_y = (board.height() - 2)/2
-
-            for col,row in board.shape:
-
-                draw_little_square(screen,(col + offset_x,row + offset_y),RGB_COLORS[board.color],i)
+            offset_y = (board.height(i) - 2)/2
+            for col,row in shape:
+                draw_little_square(screen,(col + offset_x,row + offset_y),RGB_COLORS[board.colors[i]],i)
     
     # draw debug grids:
     for i in range(5):
