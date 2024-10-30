@@ -19,7 +19,7 @@ class Board:
         return self.board[row][col]
 
     def add_block(self, position):
-        if self.__can_add_block(position):
+        if self.can_add_block(position):
             col, row = position
             for shape_col,shape_row in self.shape:
                 self.board[row + shape_row][col + shape_col] = self.color
@@ -27,14 +27,14 @@ class Board:
             self.color = random.choice([c for c in self.colors if c != self.color])
             self.shape = random.choice(random.choice(self.shapes))
     
-    # private methods
-
-    def __can_add_block(self,position):
+    def can_add_block(self,position):
         col, row = position
         for shape_col, shape_row in self.shape:
             if self.get_block((col+shape_col,row+shape_row)) != EMPTY:
                 return False
         return True
+    
+    # private methods
 
     def __clear_lines(self):
         for i,row in enumerate(self.board):
