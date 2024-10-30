@@ -26,8 +26,10 @@ class Board:
                 for shape_col,shape_row in self.shape:
                     self.board[row + shape_row][col + shape_col] = self.color
                 self.__clear_lines()
-                self.shapes[self.block_held] = random.choice(random.choice(SHAPES))
-                self.colors[self.block_held] = random.choice(COLORS)
+                if all(shape is None for shape in self.shapes):
+                    for i in range(3):
+                        self.shapes[i] = random.choice(random.choice(SHAPES))
+                        self.colors[i] = random.choice(COLORS)
             else:
                 self.shapes[self.block_held] = self.shape
             self.block_held = None
@@ -40,11 +42,12 @@ class Board:
         return True
 
     def grab_block(self,position,index):
-        x,y = position
-        self.shape = self.shapes[index]
-        self.shapes[index] = None
-        self.color = self.colors[index]
-        self.block_held = index
+        if self.shapes[index] != None:
+            x,y = position
+            self.shape = self.shapes[index]
+            self.shapes[index] = None
+            self.color = self.colors[index]
+            self.block_held = index
 
 
     def even_width(self,index = None):
