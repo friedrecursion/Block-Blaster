@@ -49,7 +49,6 @@ class Board:
             self.color = self.colors[index]
             self.block_held = index
 
-
     def even_width(self,index = None):
         shape = self.shape if index == None else self.shapes[index]
         x_coords = [x for x, y in shape]
@@ -67,10 +66,17 @@ class Board:
     # private methods
 
     def __clear_lines(self):
-        for i,row in enumerate(self.board):
+        rows_to_clear = set()
+        cols_to_clear = set()
+        for i, row in enumerate(self.board):
             if all(x != EMPTY for x in row):
-                self.board[i] = [EMPTY for _ in range(self.n)]
+                rows_to_clear.add(i)
         for j in range(self.n):
             if all(self.board[i][j] != EMPTY for i in range(self.n)):
-                for i in range(self.n):
-                    self.board[i][j] = EMPTY
+                cols_to_clear.add(j)
+        for i in rows_to_clear:
+            self.board[i] = [EMPTY for _ in range(self.n)]
+        for j in cols_to_clear:
+            for i in range(self.n):
+                self.board[i][j] = EMPTY
+

@@ -25,7 +25,13 @@ def draw(screen,board,board_position, mouse_position):
                 position = (col + shape_col,row + shape_row)
                 blend = tuple([int(((255 - BLEND_ALPHA)/255)*RGB_COLORS[EMPTY][i]) + int(BLEND_ALPHA*RGB_COLORS[board.color][i]/255) for i in range(3)])
                 draw_square_board(screen,position,blend)
-    
+
+            # color the lines that are completed by shape
+            color_lines = lines(board,board_position)
+            for square in color_lines:
+                draw_square_board(screen,square,RGB_COLORS[board.color])
+
+
         # Draw Hovering next Block
         mouseX,mouseY = mouse_position
         for shape_col, shape_row in board.shape:
@@ -53,6 +59,24 @@ def draw(screen,board,board_position, mouse_position):
     # for i in range(5):
     #     pygame.draw.line(screen, LINE_COLOR, (MARGIN_SIDE + 6 * CELL_SIZE + i * CELL_SIZE//2, MARGIN_TOP + BOARD_SIZE + 2 * CELL_SIZE), (MARGIN_SIDE + 6 * CELL_SIZE + i * CELL_SIZE//2, MARGIN_TOP + BOARD_SIZE + (2 + 2) * CELL_SIZE), LINE_THICKNESS)
     #     pygame.draw.line(screen, LINE_COLOR, (MARGIN_SIDE + 6 * CELL_SIZE, MARGIN_TOP + BOARD_SIZE + 2*CELL_SIZE + i * CELL_SIZE//2 ), (MARGIN_SIDE + 6 * CELL_SIZE + 2*CELL_SIZE, MARGIN_TOP + BOARD_SIZE + 2 * CELL_SIZE+ i * CELL_SIZE//2), LINE_THICKNESS)
+
+
+def lines(board,board_position):
+    lines = []
+    col, row = board_position
+    placed_shape = {(col + shape_col, row + shape_row) for shape_col, shape_row in board.shape}
+    for i, row_data in enumerate(board.board):
+        if all((x != EMPTY or (j, i) in placed_shape) for j, x in enumerate(row_data)):
+            lines.extend((x, i) for x in range(board.n))
+    for j in range(board.n):
+        if all((board.board[i][j] != EMPTY or (j, i) in placed_shape) for i in range(board.n)):
+            lines.extend((j, i) for i in range(board.n))
+    return lines
+
+
+
+
+
 
 def draw_little_square(screen,board_position,color,index):
     col,row = board_position
