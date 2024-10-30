@@ -1,16 +1,16 @@
 import pygame
 
-from constants import RGB_COLORS,OUT_OF_BOUND,HOVER_ALPHA, CELL_SIZE, LINE_COLOR, LINE_THICKNESS, HEIGHT, WIDTH
+from constants import RGB_COLORS,OUT_OF_BOUND,HOVER_ALPHA, CELL_SIZE, LINE_COLOR, LINE_THICKNESS, BOARD_SIZE, MARGIN_TOP, MARGIN_SIDE
 from board import Board
 
-def draw(screen,board):
+def draw(screen,board,mouse_position):
 
     # Draw the Grid
     for i in range(board.n + 1):
         # Draw vertical lines
-        pygame.draw.line(screen, LINE_COLOR, (i * CELL_SIZE, 0), (i * CELL_SIZE, HEIGHT), LINE_THICKNESS)
+        pygame.draw.line(screen, LINE_COLOR, (MARGIN_SIDE + i * CELL_SIZE, MARGIN_TOP), (MARGIN_SIDE + i * CELL_SIZE, MARGIN_TOP + BOARD_SIZE), LINE_THICKNESS)
         # Draw horizontal lines
-        pygame.draw.line(screen, LINE_COLOR, (0, i * CELL_SIZE), (WIDTH, i * CELL_SIZE), LINE_THICKNESS)
+        pygame.draw.line(screen, LINE_COLOR, (MARGIN_SIDE, MARGIN_TOP + i * CELL_SIZE), (MARGIN_SIDE + BOARD_SIZE, MARGIN_TOP + i * CELL_SIZE), LINE_THICKNESS)
     
      # Draw Blocks
     for row, board_row in enumerate(board.board):
@@ -19,8 +19,7 @@ def draw(screen,board):
             draw_square(screen,position,RGB_COLORS[color])
 
     # Draw Hover overlay of next Block
-    x, y = pygame.mouse.get_pos()
-    col,row = (x // CELL_SIZE,y // CELL_SIZE)
+    col,row = mouse_position
     for shape_col, shape_row in board.shape:
         position = (col + shape_col,row + shape_row)
         block = board.get_block(position)
@@ -31,5 +30,5 @@ def draw(screen,board):
 
 def draw_square(screen,position,color):
     col,row = position
-    square = pygame.Rect(1 + col * CELL_SIZE + LINE_THICKNESS//2,1 + row * CELL_SIZE + LINE_THICKNESS//2, CELL_SIZE - LINE_THICKNESS, CELL_SIZE - LINE_THICKNESS)
+    square = pygame.Rect(MARGIN_SIDE + 1 + col * CELL_SIZE + LINE_THICKNESS//2,MARGIN_TOP + 1 + row * CELL_SIZE + LINE_THICKNESS//2, CELL_SIZE - LINE_THICKNESS, CELL_SIZE - LINE_THICKNESS)
     pygame.draw.rect(screen, color, square)
