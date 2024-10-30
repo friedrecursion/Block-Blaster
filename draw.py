@@ -16,22 +16,27 @@ def draw(screen,board,board_position, mouse_position):
         for col, color in enumerate(board_row): 
             position = (col,row)
             draw_square_board(screen,position,RGB_COLORS[color])
-
-    # Draw Preview of next Block in the Grid
-    if board.can_add_block(board_position):
-        col,row = board_position
-        for shape_col, shape_row in board.shape:
-            position = (col + shape_col,row + shape_row)
-            # if board.get_block(position) != OUT_OF_BOUND:
-            blend = tuple([int(((255 - BLEND_ALPHA)/255)*RGB_COLORS[EMPTY][i]) + int(BLEND_ALPHA*RGB_COLORS[board.color][i]/255) for i in range(3)])
-            draw_square_board(screen,position,blend)
     
-    # Draw Hovering next Block
-    mouseX,mouseY = mouse_position
-    for shape_col, shape_row in board.shape:
-        position = (mouseX + shape_col*CELL_SIZE - CELL_SIZE//2,mouseY + shape_row*CELL_SIZE - CELL_SIZE)
-        col,row = board_position
-        draw_square_hover(screen,position,RGB_COLORS[board.color])
+    if board.block_held:
+        # Draw Preview of next Block in the Grid
+        if board.can_add_block(board_position):
+            col,row = board_position
+            for shape_col, shape_row in board.shape:
+                position = (col + shape_col,row + shape_row)
+                blend = tuple([int(((255 - BLEND_ALPHA)/255)*RGB_COLORS[EMPTY][i]) + int(BLEND_ALPHA*RGB_COLORS[board.color][i]/255) for i in range(3)])
+                draw_square_board(screen,position,blend)
+    
+        # Draw Hovering next Block
+        mouseX,mouseY = mouse_position
+        for shape_col, shape_row in board.shape:
+            position = (mouseX + shape_col*CELL_SIZE - CELL_SIZE//2,mouseY + shape_row*CELL_SIZE - CELL_SIZE)
+            col,row = board_position
+            draw_square_hover(screen,position,RGB_COLORS[board.color])
+    else:
+        # Draw next Block below the Grid
+        for shape_col, shape_row in board.shape:
+            position = (board.n//2 + shape_col,board.n + 4 + shape_row)
+            draw_square_board(screen,position,RGB_COLORS[board.color])
 
 def draw_square_hover(screen,mouse_position,color):
     mouseX,mouseY = mouse_position

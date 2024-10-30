@@ -11,6 +11,7 @@ class Board:
         self.shapes = SHAPES
         self.color = COLORS[0]
         self.colors = COLORS
+        self.block_held = False
 
     def get_block(self,position):
         col, row = position
