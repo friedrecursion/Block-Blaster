@@ -73,11 +73,6 @@ def lines(board,board_position):
             lines.extend((j, i) for i in range(board.n))
     return lines
 
-
-
-
-
-
 def draw_little_square(screen,board_position,color,index):
     col,row = board_position
     draw_block(screen,color,1 + MARGIN_SIDE + (0.5 + 3*index) * CELL_SIZE + col*CELL_SIZE//2 + LINE_THICKNESS//2,1 + MARGIN_TOP + BOARD_SIZE + 3 * CELL_SIZE + row*CELL_SIZE//2 + + LINE_THICKNESS//2, CELL_SIZE//2 - LINE_THICKNESS)
@@ -94,13 +89,13 @@ def draw_block(screen,color,x,y,size):
     pygame.draw.rect(screen,color,pygame.Rect(x,y,size,size))
     n = 8
     # top
-    pygame.draw.polygon(screen,adjust_brightness(color,1.5),[(x,y),(x+size/n,y+size/n),(x + (n-1)*size/n ,y+size/n),(x+size,y)])
+    pygame.draw.polygon(screen,adjust_brightness(color,1.4),[(x,y),(x+size/n,y+size/n),(x + (n-1)*size/n ,y+size/n),(x+size,y)])
     # left
-    pygame.draw.polygon(screen,adjust_brightness(color,1.25),[(x,y),(x+size/n,y+size/n),(x + size/n ,y+ (n-1)*size/n),(x, y + size)])
+    pygame.draw.polygon(screen,adjust_brightness(color,1.2),[(x,y),(x+size/n,y+size/n),(x + size/n ,y+ (n-1)*size/n),(x, y + size)])
     # right
-    pygame.draw.polygon(screen,adjust_brightness(color,0.75),[(x+size,y),(x+(n-1)*size/n,y+size/n),(x + (n-1)*size/n ,y+(n-1)*size/n),(x+size,y+size)])
+    pygame.draw.polygon(screen,adjust_brightness(color,0.8),[(x+size,y),(x+(n-1)*size/n,y+size/n),(x + (n-1)*size/n ,y+(n-1)*size/n),(x+size,y+size)])
     # bottom
-    pygame.draw.polygon(screen,adjust_brightness(color,0.5),[(x,y+size),(x+size/n,y+(n-1)*size/n),(x + (n-1)*size/n ,y+(n-1)*size/n),(x+size,y+size)])
+    pygame.draw.polygon(screen,adjust_brightness(color,0.6),[(x,y+size),(x+size/n,y+(n-1)*size/n),(x + (n-1)*size/n ,y+(n-1)*size/n),(x+size,y+size)])
 
 def adjust_brightness(rgb, brightness):
     brightness = max(0, brightness)

@@ -10,9 +10,10 @@ def main():
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Block Blast")
     clock = pygame.time.Clock()
+    font = pygame.font.Font(None, 70)
 
     board = Board()
-    
+    frame_count = 0
     while True:
         x,y = pygame.mouse.get_pos()
         offset_x = CELL_SIZE//2 if board.even_width() else 0
@@ -33,8 +34,18 @@ def main():
         screen.fill(BACKGROUND_COLOR)
         draw(screen,board,board_position,mouse_position)
 
+        score_text = font.render(f"{board.score}", True, (255, 255, 255))  # White color
+        text_rect = score_text.get_rect(center=(WIDTH // 2, MARGIN_TOP // 2))
+        screen.blit(score_text, text_rect)
+        
+        frame_count += 1
+        if frame_count == 5:
+            frame_count = 0 
+            board.add_score()
+
         pygame.display.flip()
         clock.tick(60)
+        
 
 if __name__ == "__main__":
     main()
