@@ -80,15 +80,29 @@ def lines(board,board_position):
 
 def draw_little_square(screen,board_position,color,index):
     col,row = board_position
-    square = pygame.Rect(1 + MARGIN_SIDE + (0.5 + 3*index) * CELL_SIZE + col*CELL_SIZE//2 + LINE_THICKNESS//2,1 + MARGIN_TOP + BOARD_SIZE + 3 * CELL_SIZE + row*CELL_SIZE//2 + + LINE_THICKNESS//2, CELL_SIZE//2 - LINE_THICKNESS, CELL_SIZE//2 - LINE_THICKNESS)
-    pygame.draw.rect(screen, color, square)
+    draw_block(screen,color,1 + MARGIN_SIDE + (0.5 + 3*index) * CELL_SIZE + col*CELL_SIZE//2 + LINE_THICKNESS//2,1 + MARGIN_TOP + BOARD_SIZE + 3 * CELL_SIZE + row*CELL_SIZE//2 + + LINE_THICKNESS//2, CELL_SIZE//2 - LINE_THICKNESS)
 
 def draw_square_mouse(screen,mouse_position,color):
     mouseX,mouseY = mouse_position
-    square = pygame.Rect(mouseX,mouseY, CELL_SIZE - LINE_THICKNESS, CELL_SIZE - LINE_THICKNESS)
-    pygame.draw.rect(screen, color, square)
+    draw_block(screen,color,mouseX,mouseY, CELL_SIZE - LINE_THICKNESS)
 
 def draw_square_board(screen,board_position,color):
     col,row = board_position
-    square = pygame.Rect(MARGIN_SIDE + 1 + col * CELL_SIZE + LINE_THICKNESS//2,MARGIN_TOP + 1 + row * CELL_SIZE + LINE_THICKNESS//2, CELL_SIZE - LINE_THICKNESS, CELL_SIZE - LINE_THICKNESS)
-    pygame.draw.rect(screen, color, square)
+    draw_block(screen,color,MARGIN_SIDE + 1 + col * CELL_SIZE + LINE_THICKNESS//2,MARGIN_TOP + 1 + row * CELL_SIZE + LINE_THICKNESS//2, CELL_SIZE - LINE_THICKNESS)
+
+def draw_block(screen,color,x,y,size):
+    pygame.draw.rect(screen,color,pygame.Rect(x,y,size,size))
+    n = 8
+    # top
+    pygame.draw.polygon(screen,adjust_brightness(color,1.5),[(x,y),(x+size/n,y+size/n),(x + (n-1)*size/n ,y+size/n),(x+size,y)])
+    # left
+    pygame.draw.polygon(screen,adjust_brightness(color,1.25),[(x,y),(x+size/n,y+size/n),(x + size/n ,y+ (n-1)*size/n),(x, y + size)])
+    # right
+    pygame.draw.polygon(screen,adjust_brightness(color,0.75),[(x+size,y),(x+(n-1)*size/n,y+size/n),(x + (n-1)*size/n ,y+(n-1)*size/n),(x+size,y+size)])
+    # bottom
+    pygame.draw.polygon(screen,adjust_brightness(color,0.5),[(x,y+size),(x+size/n,y+(n-1)*size/n),(x + (n-1)*size/n ,y+(n-1)*size/n),(x+size,y+size)])
+
+def adjust_brightness(rgb, brightness):
+    brightness = max(0, brightness)
+    new_rgb = tuple(min(int(c * brightness), 255) for c in rgb)
+    return new_rgb
