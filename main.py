@@ -10,7 +10,7 @@ def main():
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Block Blast")
     clock = pygame.time.Clock()
-    font = pygame.font.Font(None, 70)
+    font = pygame.font.Font(None, 100)
 
     board = Board()
     frame_count = 0

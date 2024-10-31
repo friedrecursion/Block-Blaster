@@ -15,7 +15,11 @@ def draw(screen,board,board_position, mouse_position):
     for row, board_row in enumerate(board.board):
         for col, color in enumerate(board_row): 
             position = (col,row)
-            draw_square_board(screen,position,RGB_COLORS[color])
+            if color == EMPTY:
+                draw_empty_board(screen,position,RGB_COLORS[color])
+            else:
+                draw_square_board(screen,position,RGB_COLORS[color])
+
     
     if board.block_held != None:
         # Draw Preview of next Block in the Grid
@@ -84,6 +88,18 @@ def draw_square_mouse(screen,mouse_position,color):
 def draw_square_board(screen,board_position,color):
     col,row = board_position
     draw_block(screen,color,MARGIN_SIDE + 1 + col * CELL_SIZE + LINE_THICKNESS//2,MARGIN_TOP + 1 + row * CELL_SIZE + LINE_THICKNESS//2, CELL_SIZE - LINE_THICKNESS)
+
+def draw_empty_board(screen,board_position,color):
+    col,row = board_position
+    draw_square(screen,color,MARGIN_SIDE + 1 + col * CELL_SIZE + LINE_THICKNESS//2,MARGIN_TOP + 1 + row * CELL_SIZE + LINE_THICKNESS//2, CELL_SIZE - LINE_THICKNESS)
+
+def draw_square(screen,color,x,y,size):
+    pygame.draw.rect(screen,color,pygame.Rect(x,y,size,size))
+    width = CELL_SIZE//15
+    pygame.draw.line(screen,LINE_COLOR, (x,y),(x+size,y),width)
+    pygame.draw.line(screen,LINE_COLOR,(x+size,y),(x+size,y+size),width)
+    pygame.draw.line(screen,LINE_COLOR,(x,y),(x,y+size),width)
+    pygame.draw.line(screen,LINE_COLOR,(x,y+size),(x+size,y+size),width)
 
 def draw_block(screen,color,x,y,size):
     pygame.draw.rect(screen,color,pygame.Rect(x,y,size,size))
