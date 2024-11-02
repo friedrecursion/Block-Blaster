@@ -12,7 +12,7 @@ class Board:
         self.shape = None
         self.shapes = [random.choice(random.choice(SHAPES)) for _ in range(3)]
         self.color = COLORS[0]
-        self.colors = [random.choice(COLORS) for _ in range(3)]
+        self.colors = [random.choice(COLORS) for _ in self.shapes]
         self.block_held = None
     
     def add_score(self):
@@ -35,7 +35,7 @@ class Board:
                     self.board[row + shape_row][col + shape_col] = self.color
                 self.__clear_lines()
                 if all(shape is None for shape in self.shapes):
-                    for i in range(3):
+                    for i,_ in enumerate(self.shapes):
                         self.shapes[i] = random.choice(random.choice(SHAPES))
                         self.colors[i] = random.choice(COLORS)
             else:

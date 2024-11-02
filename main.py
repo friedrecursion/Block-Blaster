@@ -25,7 +25,7 @@ def main():
                 pygame.quit()
                 sys.exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:  # Check for mouse click event
-                for i in range(3):
+                for i,_ in enumerate(board.shapes):
                     if x >= MARGIN_SIDE + (i * 3)*CELL_SIZE and x <= MARGIN_SIDE + (2 + i * 3)*CELL_SIZE and y >= MARGIN_TOP + BOARD_SIZE + 2*CELL_SIZE and y <= MARGIN_TOP + BOARD_SIZE + (2+2)*CELL_SIZE:
                         board.grab_block((x,y),i)
             elif event.type == pygame.MOUSEBUTTONUP:
