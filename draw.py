@@ -18,15 +18,17 @@ def draw(screen,board,board_position, mouse_position):
         # Draw Preview of next Block in the Grid
         if board.can_add_block(board_position):
             col,row = board_position
+            
+            # color the lines that are completed by shape
+            color_lines = lines(board,board_position)
+            for square in color_lines:
+                draw_square_board(screen,square,RGB_COLORS[board.color])
+
             for shape_col, shape_row in board.shape:
                 position = (col + shape_col,row + shape_row)
                 blend = tuple([int(((255 - BLEND_ALPHA)/255)*RGB_COLORS[EMPTY][i]) + int(BLEND_ALPHA*RGB_COLORS[board.color][i]/255) for i in range(3)])
                 draw_square_board(screen,position,blend)
 
-            # color the lines that are completed by shape
-            color_lines = lines(board,board_position)
-            for square in color_lines:
-                draw_square_board(screen,square,RGB_COLORS[board.color])
 
 
         # Draw Hovering next Block
